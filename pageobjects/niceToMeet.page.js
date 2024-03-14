@@ -37,28 +37,28 @@ class NiceToMeetPage extends BasePage{
     }
     
     async setFirstName(firstName){
-        startStep(`set first name ${firstName}`); 
+        startStep(`set in the first name field the value: ${firstName}`); 
         let click= await super.setText(this.firstNameField, firstName);
         endStep();
         return click
     }
 
     async setLastName(lastName){
-        startStep(`set last name ${lastName}`); 
+        startStep(`set in the last name field the value: ${lastName}`); 
         let click= await super.setText(this.lastNameField, lastName);
         endStep();
         return click
     }
 
     async setPhone(phone){
-        startStep(`set phone number ${phone}`); 
+        startStep(`set in the phone number field the value: ${phone}`); 
         let click= await super.setText(this.phoneNumberField, phone);
         endStep();
         return click
     }
 
     async setEmail(email){
-        startStep(`set email address ${email}`); 
+        startStep(`set in the email address field the value: ${email}`); 
         let emaill= await super.setText(this.emailField, email);
         endStep();
         return emaill

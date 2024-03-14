@@ -28,8 +28,8 @@ describe('basic details tests', async ()=>{
 
         
         await NiceToMeetPage.selectRequestSender(2);
-        await NiceToMeetPage.clickCloseCounselorPopup();
-        await NiceToMeetPage.selectRequestSender(2);
+        // await NiceToMeetPage.clickCloseCounselorPopup();
+        // await NiceToMeetPage.selectRequestSender(2);
         await NiceToMeetPage.clickAcceptCounselorPopup();
        
 
@@ -46,7 +46,9 @@ describe('basic details tests', async ()=>{
         let expectErrorMessage= "שדה לא תקין - אנא הקלד 2 תווים לפחות";
         let actualErrorMessage= await NiceToMeetPage.getErrorMessageFirstNameField();
 
+        startStep(`assert expected error message: ${expectErrorMessage} equal actual error message: ${actualErrorMessage}`);
         await expect(expectErrorMessage).toEqual(actualErrorMessage);
+        endStep();
 
         await NiceToMeetPage.setFirstName("123456");
         await browser.pause(500);
@@ -55,7 +57,9 @@ describe('basic details tests', async ()=>{
         expectErrorMessage= "שדה לא תקין - אנא הקלד אותיות בלבד";
         actualErrorMessage= await NiceToMeetPage.getErrorMessageFirstNameField();
 
+        startStep(`assert expected error message: ${expectErrorMessage} equal actual error message: ${actualErrorMessage}`);
         await expect(expectErrorMessage).toEqual(actualErrorMessage);
+        endStep();
 
         await NiceToMeetPage.setFirstName("*/!!");
         await browser.pause(500);
@@ -63,7 +67,9 @@ describe('basic details tests', async ()=>{
 
         actualErrorMessage= await NiceToMeetPage.getErrorMessageFirstNameField();
 
+        startStep(`assert expected error message: ${expectErrorMessage} equal actual error message: ${actualErrorMessage}`);
         expect(expectErrorMessage).toEqual(actualErrorMessage);
+        endStep()
 
         await NiceToMeetPage.setFirstName("   ");
         await browser.pause(500);
@@ -71,9 +77,14 @@ describe('basic details tests', async ()=>{
 
         actualErrorMessage= await NiceToMeetPage.getErrorMessageFirstNameField();
 
+        startStep(`assert expected error message: ${expectErrorMessage} equal actual error message: ${actualErrorMessage}`);
         expect(expectErrorMessage).toEqual(actualErrorMessage);
-    });
+        endStep()
+
+    })
 
 
 })
+
+
 
