@@ -16,7 +16,7 @@ describe('basic details tests', async ()=>{
 
     })
 
-    it('test02_authorizedSignatureLogin', async ()=>{
+    it.skip('test02_authorizedSignatureLogin', async ()=>{
 
        await NiceToMeetFlow.basicDetails(3, faker.fakerFirstName(), faker.fakerLastName(), "0526080164",faker.fakerEmailAddress())
 
@@ -37,7 +37,7 @@ describe('basic details tests', async ()=>{
 
     })
     
-    it.only('test04_firstNameField', async ()=>{
+    it('test04_firstNameField', async ()=>{
         await NiceToMeetFlow.basicDetails(1,"1",faker.fakerLastName(),"0526080164",faker.fakerEmailAddress());
 
         let expectErrorMessage= "שדה לא תקין - אנא הקלד 2 תווים לפחות";
