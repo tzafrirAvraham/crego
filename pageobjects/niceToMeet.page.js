@@ -1,5 +1,5 @@
 const BasePage= require ("./basePage.js");
-// const {startStep, endStep, addStep} = require('@wdio/allure-reporter').default;
+const {startStep, endStep, addStep} = require('@wdio/allure-reporter');
 
 
 
@@ -28,45 +28,55 @@ class NiceToMeetPage extends BasePage{
 
 
     async selectRequestSender(text){
-        // startStep('set request sender');
+        startStep('set request sender');
         await super.click(this.requestSenderField)
-        // endStep();
-        return await super.chooseFromList(text);
+        let click= await super.chooseFromList(text);
+        endStep();
+        return click
 
     }
     
     async setFirstName(firstName){
-        // startStep('set first name'); 
-        // endStep();
-        return await super.setText(this.firstNameField, firstName);
+        startStep(`set first name ${firstName}`); 
+        let click= await super.setText(this.firstNameField, firstName);
+        endStep();
+        return click
     }
 
     async setLastName(lastName){
-        // startStep('set last name'); 
-        // endStep();
-        return await super.setText(this.lastNameField, lastName);
+        startStep(`set last name ${lastName}`); 
+        let click= await super.setText(this.lastNameField, lastName);
+        endStep();
+        return click
     }
 
     async setPhone(phone){
-        // startStep('set phone number'); 
-        // endStep();
-        return await super.setText(this.phoneNumberField, phone);
+        startStep(`set phone number ${phone}`); 
+        let click= await super.setText(this.phoneNumberField, phone);
+        endStep();
+        return click
     }
 
     async setEmail(email){
-        // startStep('set email address'); 
-        // endStep();
-        return await super.setText(this.emailField, email);
+        startStep(`set email address ${email}`); 
+        let emaill= await super.setText(this.emailField, email);
+        endStep();
+        return emaill
     }
 
     async clickOnNext(){
-        // startStep('click on next button'); 
-        // endStep();
-        return await super.click(this.nextButton);
+        startStep('click on next button');
+        let click= await super.click(this.nextButton);
+        endStep();
+        return click
     }
 
     async clickCloseCounselorPopup(){
-        return await super.click(this.closeCounselorPopupButton);
+        startStep('click on Close Counselor Popup');
+        let click= await super.click(this.closeCounselorPopupButton);
+        endStep()
+        return click
+        
     }
 
     async clickAcceptCounselorPopup(){
@@ -75,23 +85,40 @@ class NiceToMeetPage extends BasePage{
     }
 
     getErrorMessageOfRequestSender(){
-        return super.getText(this.requestSenderErrorMessage);
+        startStep('get error message request sender')
+        let errorMessage= super.getText(this.requestSenderErrorMessage);
+        endStep();
+        return errorMessage
     }
 
     getErrorMessageFirstNameField(){
-        return super.getText(this.firstNameErrorMessage);
+        startStep('get error message first name')
+        let errorMessage= super.getText(this.firstNameErrorMessage);
+        endStep();
+        return errorMessage
     }
 
     getErrorMessageLastNameField(){
-        return super.getText(this.lastNameErrorMessage);
+        startStep('get error message last name')
+        let errorMessage= super.getText(this.lastNameErrorMessage);
+        endStep();
+        return errorMessage
+        
     }
 
     getErrorMessagePhoneNumberField(){
-        return super.getText(this.phoneNumberErrorMessage);
+        startStep('get error message phone number')
+        let errorMessage= super.getText(this.phoneNumberErrorMessage);
+        endStep();
+        return errorMessage
+       
     }
 
     getErrorMessageEmailField(){
-        return super.getText(this.emailErrorMessage);
+        startStep('get error message email field')
+        let errorMessage= super.getText(this.emailErrorMessage);
+        endStep();
+        return errorMessage
     }
  
 

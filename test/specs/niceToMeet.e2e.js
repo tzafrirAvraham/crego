@@ -4,6 +4,7 @@ const NiceToMeetPage= require  ("../../pageobjects/niceToMeet.page.js");
 const HomePageFlow = require ("../../flow/homePageFlow.js");
 const RequestProcessFlow = require  ("../../flow/requestProcessFlow.js");
 const faker = require ("../../utils/faker");
+const {startStep, endStep, addStep} = require('@wdio/allure-reporter').default;
 
 
 describe('basic details tests', async ()=>{
@@ -11,23 +12,30 @@ describe('basic details tests', async ()=>{
 
     it('test01_businessOwnerLogin', async ()=>{
         console.log("test1")
-
+        
         await NiceToMeetFlow.basicDetails(1, faker.fakerFirstName(), faker.fakerLastName(), "0526080164",faker.fakerEmailAddress());
+        
 
         await browser.pause(500);
+        startStep('assertion url contains the woed otp')
         await expect(browser).toHaveUrlContaining("otp");
+        endStep()
 
     });
 
     it('test03_externalCounselorLogin', async ()=>{
         console.log("test2")
 
+        
         await NiceToMeetPage.selectRequestSender(2);
         await NiceToMeetPage.clickCloseCounselorPopup();
         await NiceToMeetPage.selectRequestSender(2);
         await NiceToMeetPage.clickAcceptCounselorPopup();
+       
 
+        startStep('assert url contain the word advisors')
         await expect(browser).toHaveUrlContaining("Advisors");
+        endStep()
 
     });
     
