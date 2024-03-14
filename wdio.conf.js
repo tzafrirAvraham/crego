@@ -3,14 +3,15 @@
 // const {startStep, endStep, addStep} = require('@wdio/allure-reporter').default;
 const HomePageFlow = require ("./flow/homePageFlow.js");
 const RequestProcessFlow = require  ("./flow/requestProcessFlow.js");
-// import Alert from "./test/utils/alert";
+const Alert =require ("./utils/alert");
 exports.config = {
     //
     // ====================
     // Runner Configuration
     // ====================
     // WebdriverIO supports running e2e tests as well as unit and component tests.
-    runner: 'local',
+    runner: "local",
+  
     //
     // ==================
     // Specify Test Files
@@ -23,15 +24,14 @@ exports.config = {
     // worker process. In order to have a group of spec files run in the same worker
     // process simply enclose them in an array within the specs array.
     //
-    // The path of the spec files will be resolved relative from the directory of
-    // of the config file unless it's absolute.
+    // If you are calling `wdio` from an NPM script (see https://docs.npmjs.com/cli/run-script),
+    // then the current working directory is where your `package.json` resides, so `wdio`
+    // will be called from there.
     //
-    specs: [
-        './test/specs/**/niceToMeet.e2e.js'
-    ],
+    specs: ["./test/specs/**/niceToMeet.e2e.js"],
     // Patterns to exclude.
     exclude: [
-        // 'path/to/excluded/files'
+      // 'path/to/excluded/files'
     ],
     //
     // ============
@@ -55,10 +55,12 @@ exports.config = {
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://saucelabs.com/platform/platform-configurator
     //
-    capabilities: [{
-        browserName: 'chrome'
-    }],
-
+    capabilities: [
+      {
+        // capabilities for local browser web tests
+        browserName: "chrome", // or "firefox", "microsoftedge", "safari"
+      },
+    ],
     //
     // ===================
     // Test Configurations
@@ -66,7 +68,7 @@ exports.config = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'silent',
+    logLevel: "info",
     //
     // Set specific log levels per logger
     // loggers:
@@ -90,7 +92,7 @@ exports.config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'https://www.crediteam.co.il/',
+    baseUrl: "https://www.crediteam.co.il/",
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -106,16 +108,15 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    // services: [],
-    //
+    services: [],
+  
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
     // see also: https://webdriver.io/docs/frameworks
     //
     // Make sure you have the wdio adapter package for the specific framework installed
     // before running any tests.
-    framework: 'mocha',
-    
+    framework: "mocha",
     //
     // The number of times to retry the entire specfile when it fails as a whole
     // specFileRetries: 1,
@@ -129,15 +130,25 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec'],
-
+    reporters: [
+      "spec",
+    //   [
+    //     "allure",
+    //     {
+    //       outputDir: "allure-results",
+    //       disableWebdriverStepsReporting: false,
+    //       disableWebdriverScreenshotsReporting: false,
+    //     },
+    //   ],
+    ],
+  
+    //
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
     mochaOpts: {
-        ui: 'bdd',
-        timeout: 60000
+      ui: "bdd",
+      timeout: 60000,
     },
-
     //
     // =====
     // Hooks
@@ -152,9 +163,12 @@ exports.config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      */
     // onPrepare: function (config, capabilities) {
+    //   if(fs.existsSync("./allure-results")){
+    //       fs.rmSync("./allure-results", {recursive: true});
+    //   }
     // },
     /**
-     * Gets executed before a worker process is spawned and can be used to initialize specific service
+     * Gets executed before a worker process is spawned and can be used to initialise specific service
      * for that worker as well as modify runtime environments in an async fashion.
      * @param  {string} cid      capability id (e.g 0-0)
      * @param  {object} caps     object containing capabilities for session that will be spawn in the worker
@@ -190,7 +204,9 @@ exports.config = {
      * @param {Array.<String>} specs        List of spec file paths that are to be run
      * @param {object}         browser      instance of created browser/device session
      */
-    // before: function (capabilities, specs) {
+    // before: async function (capabilities, specs) {
+    //   await browser.url("/news");
+    //   await browser.maximizeWindow();
     // },
     /**
      * Runs before a WebdriverIO command gets executed.
@@ -209,33 +225,33 @@ exports.config = {
      * Function to be executed before a test (in Mocha/Jasmine) starts.
      */
     beforeTest: async function (test, context) {
-        // startStep('open the site')
-        await browser.maximizeWindow();
-        await browser.url("/");
-        // endStep();
-        // startStep('close alert')
-        // await Alert.acceptAlert();
-        // endStep();
-        // startStep('go to user details page')
-        await HomePageFlow.goToRequestProcessPage();
-        await RequestProcessFlow.goToNiceToMeetPage()
-        // endStep();
-      //   await browser.url("/news");
-      //   await ynetPage.closePopup();
-      //   await browser.pause(7000);
-    
-      },
+      
+      await browser.maximizeWindow();
+      await browser.url("/");
+     
+      // startStep('close alert')
+      await Alert.acceptAlert();
+      
+      
+      await HomePageFlow.goToRequestProcessPage();
+      await RequestProcessFlow.goToNiceToMeetPage()
+      
+    //   await browser.url("/news");
+    //   await ynetPage.closePopup();
+    //   await browser.pause(7000);
+  
+    },
     /**
      * Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
      * beforeEach in Mocha)
      */
-    // beforeHook: function (test, context, hookName) {
+    // beforeHook: function (test, context) {
     // },
     /**
      * Hook that gets executed _after_ a hook within the suite starts (e.g. runs after calling
      * afterEach in Mocha)
      */
-    // afterHook: function (test, context, { error, result, duration, passed, retries }, hookName) {
+    // afterHook: function (test, context, { error, result, duration, passed, retries }) {
     // },
     /**
      * Function to be executed after a test (in Mocha/Jasmine only)
@@ -245,12 +261,18 @@ exports.config = {
      * @param {*}       result.result    return object of test function
      * @param {number}  result.duration  duration of test
      * @param {boolean} result.passed    true if test has passed, otherwise false
-     * @param {object}  result.retries   information about spec related retries, e.g. `{ attempts: 0, limit: 0 }`
+     * @param {object}  result.retries   informations to spec related retries, e.g. `{ attempts: 0, limit: 0 }`
      */
-    // afterTest: function(test, context, { error, result, duration, passed, retries }) {
-    // },
-
-
+    afterTest: async function (
+      test,
+      context,
+      { error, result, duration, passed, retries }
+    ) {
+      if (error) {
+        await browser.takeScreenshot();
+      }
+    },
+  
     /**
      * Hook that gets executed after the suite has ended
      * @param {object} suite suite details
@@ -291,25 +313,30 @@ exports.config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {<Object>} results object containing test results
      */
-    // onComplete: function(exitCode, config, capabilities, results) {
+    // onComplete: function (exitCode, config, capabilities, results) {
+    //   const reportError = new Error("Could not generate Allure report");
+    //   const generation = allure(["generate", "allure-results", "--clean"]);
+    //   return new Promise((resolve, reject) => {
+    //     const generationTimeout = setTimeout(() => reject(reportError), 5000);
+  
+    //     generation.on("exit", function (exitCode) {
+    //       clearTimeout(generationTimeout);
+  
+    //       if (exitCode !== 0) {
+    //         return reject(reportError);
+    //       }
+  
+    //       console.log("Allure report successfully generated");
+    //       resolve();
+    //     });
+    //   });
     // },
     /**
-    * Gets executed when a refresh happens.
-    * @param {string} oldSessionId session ID of the old session
-    * @param {string} newSessionId session ID of the new session
-    */
+     * Gets executed when a refresh happens.
+     * @param {string} oldSessionId session ID of the old session
+     * @param {string} newSessionId session ID of the new session
+     */
     // onReload: function(oldSessionId, newSessionId) {
     // }
-    /**
-    * Hook that gets executed before a WebdriverIO assertion happens.
-    * @param {object} params information about the assertion to be executed
-    */
-    // beforeAssertion: function(params) {
-    // }
-    /**
-    * Hook that gets executed after a WebdriverIO assertion happened.
-    * @param {object} params information about the assertion that was executed, including its results
-    */
-    // afterAssertion: function(params) {
-    // }
-}
+  };
+  
