@@ -1,4 +1,4 @@
 "Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Thu Mar 14 17:13:15 EET 2024","Thu Mar 14 17:13:36 EET 2024","20618","","basic details tests","","","","test03_externalCounselorLogin",""
-"failed","Thu Mar 14 17:13:36 EET 2024","Thu Mar 14 17:13:56 EET 2024","20326","","basic details tests","","","","test04_firstNameField",""
-"passed","Thu Mar 14 17:12:54 EET 2024","Thu Mar 14 17:13:15 EET 2024","21603","","basic details tests","","","","test01_businessOwnerLogin",""
+"passed","Thu Mar 14 17:23:09 EET 2024","Thu Mar 14 17:23:31 EET 2024","21815","","basic details tests","","","","test01_businessOwnerLogin",""
+"failed","Thu Mar 14 17:23:51 EET 2024","Thu Mar 14 17:24:12 EET 2024","20962","","basic details tests","","","","test04_firstNameField",""
+"passed","Thu Mar 14 17:23:31 EET 2024","Thu Mar 14 17:23:51 EET 2024","20310","","basic details tests","","","","test03_externalCounselorLogin",""
